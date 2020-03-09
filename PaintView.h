@@ -23,25 +23,25 @@ public:
 	int handle(int event);
 
 	void refresh();
-	
+
 	void resizeWindow(int width, int height);
 
 	void SaveCurrentContent();
 
 	void RestoreContent();
 
-	ImpressionistDoc *m_pDoc;
+	ImpressionistDoc* m_pDoc;
 
 private:
 	GLvoid* m_pPaintBitstart;
-	int		m_nDrawWidth,
-			m_nDrawHeight,
-			m_nStartRow, 
-			m_nEndRow,
-			m_nStartCol, 
-			m_nEndCol,
-			m_nWindowWidth, 
-			m_nWindowHeight;
+	int m_nDrawWidth,
+		m_nDrawHeight,
+		m_nStartRow,
+		m_nEndRow,
+		m_nStartCol,
+		m_nEndCol,
+		m_nWindowWidth,
+		m_nWindowHeight;
 
 };
 
