@@ -3,7 +3,7 @@
 //
 // The main driver program for the other parts. We have two major components,
 // UI and Doc.
-// They do have a link to each other as their member such that they can 
+// They do have a link to each other as their member such that they can
 // communicate.
 //
 
@@ -16,11 +16,10 @@
 #include "impressionistUI.h"
 #include "impressionistDoc.h"
 
-ImpressionistUI *impUI;
-ImpressionistDoc *impDoc;
+ImpressionistUI* impUI;
+ImpressionistDoc* impDoc;
 
-int main(int	argc, 
-		 char**	argv) 
+int main(int argc, char** argv)
 {
 	impDoc = new ImpressionistDoc();
 
@@ -31,7 +30,7 @@ int main(int	argc,
 	impUI->setDocument(impDoc);
 	impDoc->setUI(impUI);
 
-	Fl::visual(FL_DOUBLE|FL_INDEX);
+	Fl::visual(FL_DOUBLE | FL_INDEX);
 
 	impUI->show();
 
@@ -41,10 +40,10 @@ int main(int	argc,
 // global functions
 float frand()
 {
-	return (float)rand()/RAND_MAX;
+	return (float)rand() / RAND_MAX;
 }
 
 int irand(int max)
 {
-	return rand()%max;
+	return rand() % max;
 }

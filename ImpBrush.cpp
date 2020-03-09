@@ -9,13 +9,10 @@
 #include "ImpBrush.h"
 
 // Static class member initializations
-int			ImpBrush::c_nBrushCount	= 0;
-ImpBrush**	ImpBrush::c_pBrushes	= NULL;
+int ImpBrush::c_nBrushCount = 0;
+ImpBrush** ImpBrush::c_pBrushes = NULL;
 
-ImpBrush::ImpBrush(ImpressionistDoc*	pDoc, 
-				   char*				name) :
-					m_pDoc(pDoc), 
-					m_pBrushName(name)
+ImpBrush::ImpBrush(ImpressionistDoc* pDoc, char* name) : m_pDoc(pDoc), m_pBrushName(name)
 {
 }
 
@@ -37,18 +34,16 @@ char* ImpBrush::BrushName(void)
 
 //----------------------------------------------------
 // Set the color to paint with to the color at source,
-// which is the coord at the original window to sample 
+// which is the coord at the original window to sample
 // the color from
 //----------------------------------------------------
-void ImpBrush::SetColor (const Point source)
+void ImpBrush::SetColor(const Point source)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
-
 	GLubyte color[3];
 
-	memcpy ( color, pDoc->GetOriginalPixel( source ), 3 );
- 
-	glColor3ubv( color );
+	memcpy(color, pDoc->GetOriginalPixel(source), 3);
 
+	glColor3ubv(color);
 }
