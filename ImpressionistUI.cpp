@@ -153,7 +153,7 @@ void ImpressionistUI::cb_myInput(Fl_Widget * o, void* v)
 //------------------------------------- Help Functions --------------------------------------------
 
 //------------------------------------------------------------
-// This returns the UI, given the menu item.  It provides a
+// This returns the UI, given the menu item. It provides a
 // link from the menu items to the UI
 //------------------------------------------------------------
 ImpressionistUI* ImpressionistUI::whoami(Fl_Menu_* o)
@@ -245,6 +245,16 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 	int type = (int)v;
 
 	pDoc->setBrushType(type);
+
+	// Activate some sliders only when they are necessary
+	if (type == BRUSH_LINES || type == BRUSH_SCATTERED_LINES) {
+		pUI->m_BrushLineWidthSlider->activate();
+		pUI->m_BrushLineAngleSlider->activate();
+	}
+	else {
+		pUI->m_BrushLineWidthSlider->deactivate();
+		pUI->m_BrushLineAngleSlider->deactivate();
+	}
 }
 
 //------------------------------------------------------------
@@ -457,30 +467,32 @@ ImpressionistUI::ImpressionistUI() {
 	m_BrushLineWidthSlider->value(m_nLineWidth);
 	m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
 	m_BrushLineWidthSlider->callback(cb_lineWidthSlides);
+	m_BrushLineWidthSlider->deactivate(); // Deactivate at the beginning because we have the point brush
 
-	m_BrushLineWidthSlider = new Fl_Value_Slider(10, 140, 300, 20, "Line Angle");
-	m_BrushLineWidthSlider->user_data((void*)(this)); // record self to be used by static callback functions
-	m_BrushLineWidthSlider->type(FL_HOR_NICE_SLIDER);
-	m_BrushLineWidthSlider->labelfont(FL_COURIER);
-	m_BrushLineWidthSlider->labelsize(12);
-	m_BrushLineWidthSlider->minimum(0);
-	m_BrushLineWidthSlider->maximum(359);
-	m_BrushLineWidthSlider->step(1);
-	m_BrushLineWidthSlider->value(m_nLineAngle);
-	m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
-	m_BrushLineWidthSlider->callback(cb_lineAngleSlides);
+	m_BrushLineAngleSlider = new Fl_Value_Slider(10, 140, 300, 20, "Line Angle");
+	m_BrushLineAngleSlider->user_data((void*)(this)); // record self to be used by static callback functions
+	m_BrushLineAngleSlider->type(FL_HOR_NICE_SLIDER);
+	m_BrushLineAngleSlider->labelfont(FL_COURIER);
+	m_BrushLineAngleSlider->labelsize(12);
+	m_BrushLineAngleSlider->minimum(0);
+	m_BrushLineAngleSlider->maximum(359);
+	m_BrushLineAngleSlider->step(1);
+	m_BrushLineAngleSlider->value(m_nLineAngle);
+	m_BrushLineAngleSlider->align(FL_ALIGN_RIGHT);
+	m_BrushLineAngleSlider->callback(cb_lineAngleSlides);
+	m_BrushLineAngleSlider->deactivate(); // Deactivate at the beginning because we have the point brush
 
-	m_BrushLineWidthSlider = new Fl_Value_Slider(10, 170, 300, 20, "Alpha");
-	m_BrushLineWidthSlider->user_data((void*)(this)); // record self to be used by static callback functions
-	m_BrushLineWidthSlider->type(FL_HOR_NICE_SLIDER);
-	m_BrushLineWidthSlider->labelfont(FL_COURIER);
-	m_BrushLineWidthSlider->labelsize(12);
-	m_BrushLineWidthSlider->minimum(0);
-	m_BrushLineWidthSlider->maximum(1);
-	m_BrushLineWidthSlider->step(0.01);
-	m_BrushLineWidthSlider->value(m_nAlpha);
-	m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
-	m_BrushLineWidthSlider->callback(cb_alphaSlides);
+	m_BrushAlphaSlider = new Fl_Value_Slider(10, 170, 300, 20, "Alpha");
+	m_BrushAlphaSlider->user_data((void*)(this)); // record self to be used by static callback functions
+	m_BrushAlphaSlider->type(FL_HOR_NICE_SLIDER);
+	m_BrushAlphaSlider->labelfont(FL_COURIER);
+	m_BrushAlphaSlider->labelsize(12);
+	m_BrushAlphaSlider->minimum(0);
+	m_BrushAlphaSlider->maximum(1);
+	m_BrushAlphaSlider->step(0.01);
+	m_BrushAlphaSlider->value(m_nAlpha);
+	m_BrushAlphaSlider->align(FL_ALIGN_RIGHT);
+	m_BrushAlphaSlider->callback(cb_alphaSlides);
 
 	m_brushDialog->end();
 }
