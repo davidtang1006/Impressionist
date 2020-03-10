@@ -156,7 +156,7 @@ void ImpressionistUI::cb_myInput(Fl_Widget * o, void* v)
 // This returns the UI, given the menu item.  It provides a
 // link from the menu items to the UI
 //------------------------------------------------------------
-ImpressionistUI* ImpressionistUI::whoami(Fl_Menu_ * o)
+ImpressionistUI* ImpressionistUI::whoami(Fl_Menu_* o)
 {
 	return ((ImpressionistUI*)(o->parent()->user_data()));
 }
@@ -167,7 +167,7 @@ ImpressionistUI* ImpressionistUI::whoami(Fl_Menu_ * o)
 // Brings up a file chooser and then loads the chosen image
 // This is called by the UI when the load image menu item is chosen
 //------------------------------------------------------------------
-void ImpressionistUI::cb_load_image(Fl_Menu_ * o, void* v)
+void ImpressionistUI::cb_load_image(Fl_Menu_* o, void* v)
 {
 	ImpressionistDoc* pDoc = whoami(o)->getDocument();
 
@@ -181,7 +181,7 @@ void ImpressionistUI::cb_load_image(Fl_Menu_ * o, void* v)
 // Brings up a file chooser and then saves the painted image
 // This is called by the UI when the save image menu item is chosen
 //------------------------------------------------------------------
-void ImpressionistUI::cb_save_image(Fl_Menu_ * o, void* v)
+void ImpressionistUI::cb_save_image(Fl_Menu_* o, void* v)
 {
 	ImpressionistDoc* pDoc = whoami(o)->getDocument();
 
@@ -196,7 +196,7 @@ void ImpressionistUI::cb_save_image(Fl_Menu_ * o, void* v)
 // This is called by the UI when the brushes menu item
 // is chosen
 //-------------------------------------------------------------
-void ImpressionistUI::cb_brushes(Fl_Menu_ * o, void* v)
+void ImpressionistUI::cb_brushes(Fl_Menu_* o, void* v)
 {
 	whoami(o)->m_brushDialog->show();
 }
@@ -205,7 +205,7 @@ void ImpressionistUI::cb_brushes(Fl_Menu_ * o, void* v)
 // Clears the paintview canvas.
 // Called by the UI when the clear canvas menu item is chosen
 //------------------------------------------------------------
-void ImpressionistUI::cb_clear_canvas(Fl_Menu_ * o, void* v)
+void ImpressionistUI::cb_clear_canvas(Fl_Menu_* o, void* v)
 {
 	ImpressionistDoc* pDoc = whoami(o)->getDocument();
 
@@ -216,7 +216,7 @@ void ImpressionistUI::cb_clear_canvas(Fl_Menu_ * o, void* v)
 // Causes the Impressionist program to exit
 // Called by the UI when the quit menu item is chosen
 //------------------------------------------------------------
-void ImpressionistUI::cb_exit(Fl_Menu_ * o, void* v)
+void ImpressionistUI::cb_exit(Fl_Menu_* o, void* v)
 {
 	whoami(o)->m_mainWindow->hide();
 	whoami(o)->m_brushDialog->hide();
@@ -226,7 +226,7 @@ void ImpressionistUI::cb_exit(Fl_Menu_ * o, void* v)
 // Brings up an about dialog box
 // Called by the UI when the about menu item is chosen
 //-----------------------------------------------------------
-void ImpressionistUI::cb_about(Fl_Menu_ * o, void* v)
+void ImpressionistUI::cb_about(Fl_Menu_* o, void* v)
 {
 	fl_message("Impressionist FLTK version for CS341, Spring 2002");
 }
@@ -237,7 +237,7 @@ void ImpressionistUI::cb_about(Fl_Menu_ * o, void* v)
 // choice.
 // Called by the UI when a brush is chosen in the brush choice
 //-------------------------------------------------------------
-void ImpressionistUI::cb_brushChoice(Fl_Widget * o, void* v)
+void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 {
 	ImpressionistUI* pUI = ((ImpressionistUI*)(o->user_data()));
 	ImpressionistDoc* pDoc = pUI->getDocument();
@@ -251,7 +251,7 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget * o, void* v)
 // Clears the paintview canvas.
 // Called by the UI when the clear canvas button is pushed
 //------------------------------------------------------------
-void ImpressionistUI::cb_clear_canvas_button(Fl_Widget * o, void* v)
+void ImpressionistUI::cb_clear_canvas_button(Fl_Widget* o, void* v)
 {
 	ImpressionistDoc* pDoc = ((ImpressionistUI*)(o->user_data()))->getDocument();
 
@@ -263,9 +263,39 @@ void ImpressionistUI::cb_clear_canvas_button(Fl_Widget * o, void* v)
 // slider
 // Called by the UI when the size slider is moved
 //-----------------------------------------------------------
-void ImpressionistUI::cb_sizeSlides(Fl_Widget * o, void* v)
+void ImpressionistUI::cb_sizeSlides(Fl_Widget* o, void* v)
 {
 	((ImpressionistUI*)(o->user_data()))->m_nSize = int(((Fl_Slider*)o)->value());
+}
+
+//-----------------------------------------------------------
+// Updates the brush line width to use from the value of the size
+// slider
+// Called by the UI when the line width slider is moved
+//-----------------------------------------------------------
+void ImpressionistUI::cb_lineWidthSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nLineWidth = int(((Fl_Slider*)o)->value());
+}
+
+//-----------------------------------------------------------
+// Updates the brush line angle to use from the value of the size
+// slider
+// Called by the UI when the line angle slider is moved
+//-----------------------------------------------------------
+void ImpressionistUI::cb_lineAngleSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nLineAngle = int(((Fl_Slider*)o)->value());
+}
+
+//-----------------------------------------------------------
+// Updates the brush alpha to use from the value of the size
+// slider
+// Called by the UI when the alpha slider is moved
+//-----------------------------------------------------------
+void ImpressionistUI::cb_alphaSlides(Fl_Widget* o, void* v)
+{
+	((ImpressionistUI*)(o->user_data()))->m_nAlpha = int(((Fl_Slider*)o)->value());
 }
 
 //---------------------------------- per instance functions --------------------------------------
@@ -300,7 +330,7 @@ void ImpressionistUI::resize_windows(int w, int h) {
 // Set the ImpressionistDoc used by the UI to 
 // communicate with the brushes 
 //------------------------------------------------
-void ImpressionistUI::setDocument(ImpressionistDoc * doc)
+void ImpressionistUI::setDocument(ImpressionistDoc* doc)
 {
 	m_pDoc = doc;
 
@@ -387,6 +417,9 @@ ImpressionistUI::ImpressionistUI() {
 
 	// init values
 	m_nSize = 10;
+	m_nLineWidth = 1;
+	m_nLineAngle = 0;
+	m_nAlpha = 1;
 
 	// brush dialog definition
 	m_brushDialog = new Fl_Window(400, 325, "Brush Dialog");
@@ -400,7 +433,7 @@ ImpressionistUI::ImpressionistUI() {
 	m_ClearCanvasButton->user_data((void*)(this));
 	m_ClearCanvasButton->callback(cb_clear_canvas_button);
 
-	// Add brush size slider to the dialog 
+	// Add brush size slider to the dialog
 	m_BrushSizeSlider = new Fl_Value_Slider(10, 80, 300, 20, "Size");
 	m_BrushSizeSlider->user_data((void*)(this));	// record self to be used by static callback functions
 	m_BrushSizeSlider->type(FL_HOR_NICE_SLIDER);
@@ -412,6 +445,42 @@ ImpressionistUI::ImpressionistUI() {
 	m_BrushSizeSlider->value(m_nSize);
 	m_BrushSizeSlider->align(FL_ALIGN_RIGHT);
 	m_BrushSizeSlider->callback(cb_sizeSlides);
+
+	m_BrushLineWidthSlider = new Fl_Value_Slider(10, 110, 300, 20, "Line Width");
+	m_BrushLineWidthSlider->user_data((void*)(this)); // record self to be used by static callback functions
+	m_BrushLineWidthSlider->type(FL_HOR_NICE_SLIDER);
+	m_BrushLineWidthSlider->labelfont(FL_COURIER);
+	m_BrushLineWidthSlider->labelsize(12);
+	m_BrushLineWidthSlider->minimum(1);
+	m_BrushLineWidthSlider->maximum(40);
+	m_BrushLineWidthSlider->step(1);
+	m_BrushLineWidthSlider->value(m_nLineWidth);
+	m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
+	m_BrushLineWidthSlider->callback(cb_lineWidthSlides);
+
+	m_BrushLineWidthSlider = new Fl_Value_Slider(10, 140, 300, 20, "Line Angle");
+	m_BrushLineWidthSlider->user_data((void*)(this)); // record self to be used by static callback functions
+	m_BrushLineWidthSlider->type(FL_HOR_NICE_SLIDER);
+	m_BrushLineWidthSlider->labelfont(FL_COURIER);
+	m_BrushLineWidthSlider->labelsize(12);
+	m_BrushLineWidthSlider->minimum(0);
+	m_BrushLineWidthSlider->maximum(359);
+	m_BrushLineWidthSlider->step(1);
+	m_BrushLineWidthSlider->value(m_nLineAngle);
+	m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
+	m_BrushLineWidthSlider->callback(cb_lineAngleSlides);
+
+	m_BrushLineWidthSlider = new Fl_Value_Slider(10, 170, 300, 20, "Alpha");
+	m_BrushLineWidthSlider->user_data((void*)(this)); // record self to be used by static callback functions
+	m_BrushLineWidthSlider->type(FL_HOR_NICE_SLIDER);
+	m_BrushLineWidthSlider->labelfont(FL_COURIER);
+	m_BrushLineWidthSlider->labelsize(12);
+	m_BrushLineWidthSlider->minimum(0);
+	m_BrushLineWidthSlider->maximum(1);
+	m_BrushLineWidthSlider->step(0.01);
+	m_BrushLineWidthSlider->value(m_nAlpha);
+	m_BrushLineWidthSlider->align(FL_ALIGN_RIGHT);
+	m_BrushLineWidthSlider->callback(cb_alphaSlides);
 
 	m_brushDialog->end();
 }
