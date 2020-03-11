@@ -52,6 +52,9 @@ public:
 	// Interface to get attribute
 	int getSize();
 	void setSize(int size);
+	int getLineWidth(); // The setters are skipped
+	int getLineAngle();
+	float getAlpha();
 
 private:
 	ImpressionistDoc* m_pDoc; // pointer to document to communicate with the document
@@ -60,7 +63,7 @@ private:
 	int m_nSize;
 	int m_nLineWidth;
 	int m_nLineAngle;
-	double m_nAlpha;
+	float m_nAlpha;
 
 	// Static class members
 	static Fl_Menu_Item menuitems[];

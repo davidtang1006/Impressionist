@@ -4,6 +4,8 @@
 // The implementation of virtual brush. All the other brushes inherit from it.
 //
 
+#include <limits.h>
+
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
 #include "ImpBrush.h"
@@ -37,13 +39,16 @@ char* ImpBrush::BrushName(void)
 // which is the coord at the original window to sample
 // the color from
 //----------------------------------------------------
-void ImpBrush::SetColor(const Point source)
+void ImpBrush::SetColor(const Point source, const float alpha)
 {
 	ImpressionistDoc* pDoc = GetDocument();
 
-	GLubyte color[3];
+	GLubyte color[4];
 
-	memcpy(color, pDoc->GetOriginalPixel(source), 3);
+	color[0] = pDoc->GetOriginalPixel(source)[0];
+	color[1] = pDoc->GetOriginalPixel(source)[1];
+	color[2] = pDoc->GetOriginalPixel(source)[2];
+	color[3] = alpha * UCHAR_MAX;
 
-	glColor3ubv(color);
+	glColor4ub(color[0], color[1], color[2], color[3]);
 }

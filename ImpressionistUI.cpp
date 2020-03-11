@@ -305,7 +305,7 @@ void ImpressionistUI::cb_lineAngleSlides(Fl_Widget* o, void* v)
 //-----------------------------------------------------------
 void ImpressionistUI::cb_alphaSlides(Fl_Widget* o, void* v)
 {
-	((ImpressionistUI*)(o->user_data()))->m_nAlpha = int(((Fl_Slider*)o)->value());
+	((ImpressionistUI*)(o->user_data()))->m_nAlpha = float(((Fl_Slider*)o)->value());
 }
 
 //---------------------------------- per instance functions --------------------------------------
@@ -365,6 +365,21 @@ void ImpressionistUI::setSize(int size)
 
 	if (size <= 40)
 		m_BrushSizeSlider->value(m_nSize);
+}
+
+int ImpressionistUI::getLineWidth()
+{
+	return m_nLineWidth;
+}
+
+int ImpressionistUI::getLineAngle()
+{
+	return m_nLineAngle;
+}
+
+float ImpressionistUI::getAlpha()
+{
+	return m_nAlpha;
 }
 
 // Main menu definition
