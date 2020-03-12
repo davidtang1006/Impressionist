@@ -55,6 +55,9 @@ public:
 	void CaptureDirectionMove(const Point target);
 	void CaptureDirectionEnd(const Point target);
 
+	void CaptureCursorDirectionBegin(const Point target);
+	void CaptureCursorDirectionEnd(const Point target);
+
 	// according to the source image and the position, determine the draw color
 	void SetColor(const Point source, const float alpha);
 
@@ -74,6 +77,7 @@ private:
 	char* m_pBrushName;
 
 	Point m_DirectionStartPoint;
+	Point m_CursorPreviousLocation;
 };
 
 #endif

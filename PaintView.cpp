@@ -94,9 +94,15 @@ void PaintView::draw()
 		{
 		case LEFT_MOUSE_DOWN:
 			m_pDoc->m_pCurrentBrush->BrushBegin(source, target);
+			m_pDoc->m_pCurrentBrush->CaptureCursorDirectionBegin(target);
 			break;
 		case LEFT_MOUSE_DRAG:
 			m_pDoc->m_pCurrentBrush->BrushMove(source, target);
+			if ((strcmp(m_pDoc->m_pCurrentBrush->BrushName(), "Lines") == 0 ||
+				strcmp(m_pDoc->m_pCurrentBrush->BrushName(), "Scattered Lines") == 0) &&
+				m_pDoc->m_pCurrentStrokeDirection == StrokeDirection::BRUSH_DIRECTION) {
+				m_pDoc->m_pCurrentBrush->CaptureCursorDirectionEnd(target);
+			}
 			break;
 		case LEFT_MOUSE_UP:
 			m_pDoc->m_pCurrentBrush->BrushEnd(source, target);

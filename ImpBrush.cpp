@@ -53,6 +53,22 @@ void ImpBrush::CaptureDirectionEnd(const Point target) {
 	dlg->setLineAngle((int)lineAngle);
 }
 
+void ImpBrush::CaptureCursorDirectionBegin(const Point target) {
+	m_CursorPreviousLocation = target;
+}
+
+void ImpBrush::CaptureCursorDirectionEnd(const Point target) {
+	ImpressionistDoc* pDoc = GetDocument();
+	ImpressionistUI* dlg = pDoc->m_pUI;
+
+	double x = (double)target.x - (double)m_CursorPreviousLocation.x;
+	double y = (double)target.y - (double)m_CursorPreviousLocation.y;
+	double lineAngle = (atan2(y, x) < 0) ? atan2(y, x) * 180 / M_PI + 360 : atan2(y, x) * 180 / M_PI;
+	dlg->setLineAngle((int)lineAngle);
+
+	m_CursorPreviousLocation = target;
+}
+
 //---------------------------------------------------
 // Return m_pDoc, which connects the UI and brushes
 //---------------------------------------------------
