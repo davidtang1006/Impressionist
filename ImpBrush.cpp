@@ -5,6 +5,7 @@
 //
 
 #include <limits.h>
+#include <math.h>
 
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
@@ -16,6 +17,27 @@ ImpBrush** ImpBrush::c_pBrushes = NULL;
 
 ImpBrush::ImpBrush(ImpressionistDoc* pDoc, char* name) : m_pDoc(pDoc), m_pBrushName(name)
 {
+}
+
+void ImpBrush::CaptureDirectionBegin(const Point target) {
+	ImpressionistDoc* pDoc = GetDocument();
+	ImpressionistUI* dlg = pDoc->m_pUI;
+
+	m_DirectionStartPoint = target;
+}
+
+void ImpBrush::CaptureDirectionEnd(const Point target) {
+	ImpressionistDoc* pDoc = GetDocument();
+	ImpressionistUI* dlg = pDoc->m_pUI;
+
+	double x = pow((double)target.x - (double)m_DirectionStartPoint.x, 2);
+	double y = pow((double)target.y - (double)m_DirectionStartPoint.y, 2);
+	dlg->setSize(sqrt(x + y));
+
+	x = (double)target.x - (double)m_DirectionStartPoint.x;
+	y = (double)target.y - (double)m_DirectionStartPoint.y;
+	double lineAngle = (atan2(y, x) < 0) ? atan2(y, x) * 180 / M_PI + 360 : atan2(y, x) * 180 / M_PI;
+	dlg->setLineAngle((int)lineAngle);
 }
 
 //---------------------------------------------------

@@ -53,8 +53,9 @@ public:
 	// Interface to get attribute
 	int getSize();
 	void setSize(int size);
-	int getLineWidth(); // The setters are skipped
+	int getLineWidth();
 	int getLineAngle();
+	void setLineAngle(int angle);
 	float getAlpha();
 
 private:

@@ -51,6 +51,9 @@ public:
 	virtual void BrushMove(const Point source, const Point target) = 0;
 	virtual void BrushEnd(const Point source, const Point target) = 0;
 
+	void CaptureDirectionBegin(const Point target);
+	void CaptureDirectionEnd(const Point target);
+
 	// according to the source image and the position, determine the draw color
 	void SetColor(const Point source, const float alpha);
 
@@ -68,6 +71,8 @@ private:
 
 	// Brush's name (not used in this version).
 	char* m_pBrushName;
+
+	Point m_DirectionStartPoint;
 };
 
 #endif

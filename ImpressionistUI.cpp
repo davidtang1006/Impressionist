@@ -248,10 +248,12 @@ void ImpressionistUI::cb_brushChoice(Fl_Widget* o, void* v)
 
 	// Activate some sliders only when they are necessary
 	if (type == BRUSH_LINES || type == BRUSH_SCATTERED_LINES) {
+		pUI->m_StrokeDirectionChoice->activate();
 		pUI->m_BrushLineWidthSlider->activate();
 		pUI->m_BrushLineAngleSlider->activate();
 	}
 	else {
+		pUI->m_StrokeDirectionChoice->deactivate();
 		pUI->m_BrushLineWidthSlider->deactivate();
 		pUI->m_BrushLineAngleSlider->deactivate();
 	}
@@ -387,6 +389,11 @@ int ImpressionistUI::getLineAngle()
 	return m_nLineAngle;
 }
 
+void ImpressionistUI::setLineAngle(int angle)
+{
+	m_nLineAngle = angle;
+}
+
 float ImpressionistUI::getAlpha()
 {
 	return m_nAlpha;
@@ -475,10 +482,11 @@ ImpressionistUI::ImpressionistUI() {
 	m_ClearCanvasButton->user_data((void*)(this));
 	m_ClearCanvasButton->callback(cb_clear_canvas_button);
 
-	Fl_Choice* m_StrokeDirectionChoice = new Fl_Choice(115, 45, 150, 25, "&Stroke Direction");
+	m_StrokeDirectionChoice = new Fl_Choice(115, 45, 150, 25, "&Stroke Direction");
 	m_StrokeDirectionChoice->user_data((void*)(this)); // record self to be used by static callback functions
 	m_StrokeDirectionChoice->menu(m_StrokeDirectionChoiceMenu);
 	m_StrokeDirectionChoice->callback(cb_StrokeDirectionChoice);
+	m_StrokeDirectionChoice->deactivate(); // Deactivate at the beginning because we have the point brush
 
 	// Add brush size slider to the dialog
 	m_BrushSizeSlider = new Fl_Value_Slider(10, 80, 300, 20, "Size");
