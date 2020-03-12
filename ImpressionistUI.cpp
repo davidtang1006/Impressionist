@@ -82,7 +82,7 @@ void ImpressionistUI::cb_MyValueSlides(Fl_Widget * o, void* v)
 
 //----To install a choice--------------------------
 Fl_Choice* myChoice = new Fl_Choice(50, 10, 150, 25, "&myChoiceLabel");
-myChoice->user_data((void*)(this));	 // record self to be used by static callback functions
+myChoice->user_data((void*)(this)); // record self to be used by static callback functions
 Fl_Menu_Item ImpressionistUI::myChoiceMenu[3 + 1] = {
 	{"one",FL_ALT + 'p', (Fl_Callback*)ImpressionistUI::cb_myChoice, (void*)ONE},
 	{"two",FL_ALT + 'l', (Fl_Callback*)ImpressionistUI::cb_myChoice, (void*)TWO},
@@ -268,6 +268,16 @@ void ImpressionistUI::cb_clear_canvas_button(Fl_Widget* o, void* v)
 	pDoc->clearCanvas();
 }
 
+void ImpressionistUI::cb_StrokeDirectionChoice(Fl_Widget* o, void* v)
+{
+	ImpressionistUI* pUI = ((ImpressionistUI*)(o->user_data()));
+	ImpressionistDoc* pDoc = pUI->getDocument();
+
+	int type = (int)v;
+
+	pDoc->setStrokeDirectionType(type);
+}
+
 //-----------------------------------------------------------
 // Updates the brush size to use from the value of the size
 // slider
@@ -411,6 +421,13 @@ Fl_Menu_Item ImpressionistUI::brushTypeMenu[NUM_BRUSH_TYPE + 1] = {
 	{0}
 };
 
+Fl_Menu_Item ImpressionistUI::m_StrokeDirectionChoiceMenu[(int)StrokeDirection::NUM_STROKE_DIRECTION + 1] = {
+	{"Slider/Right Mouse",FL_ALT + 's', (Fl_Callback*)ImpressionistUI::cb_StrokeDirectionChoice, (void*)StrokeDirection::SLIDER_OR_RIGHT_MOUSE},
+	{"Gradient",FL_ALT + 'g', (Fl_Callback*)ImpressionistUI::cb_StrokeDirectionChoice, (void*)StrokeDirection::GRADIENT},
+	{"Brush Direction",FL_ALT + 'b', (Fl_Callback*)ImpressionistUI::cb_StrokeDirectionChoice, (void*)StrokeDirection::BRUSH_DIRECTION},
+	{0}
+};
+
 //----------------------------------------------------
 // Constructor.  Creates all of the widgets.
 // Add new widgets here
@@ -457,6 +474,11 @@ ImpressionistUI::ImpressionistUI() {
 	m_ClearCanvasButton = new Fl_Button(240, 10, 150, 25, "&Clear Canvas");
 	m_ClearCanvasButton->user_data((void*)(this));
 	m_ClearCanvasButton->callback(cb_clear_canvas_button);
+
+	Fl_Choice* m_StrokeDirectionChoice = new Fl_Choice(115, 45, 150, 25, "&Stroke Direction");
+	m_StrokeDirectionChoice->user_data((void*)(this)); // record self to be used by static callback functions
+	m_StrokeDirectionChoice->menu(m_StrokeDirectionChoiceMenu);
+	m_StrokeDirectionChoice->callback(cb_StrokeDirectionChoice);
 
 	// Add brush size slider to the dialog
 	m_BrushSizeSlider = new Fl_Value_Slider(10, 80, 300, 20, "Size");

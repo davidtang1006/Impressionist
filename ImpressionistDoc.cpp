@@ -7,10 +7,9 @@
 
 #include <FL/fl_ask.H>
 
+#include "ImpBrush.h"
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
-
-#include "ImpBrush.h"
 
 // Include individual brush headers here.
 #include "PointBrush.h"
@@ -72,6 +71,11 @@ char* ImpressionistDoc::getImageName()
 void ImpressionistDoc::setBrushType(int type)
 {
 	m_pCurrentBrush = ImpBrush::c_pBrushes[type];
+}
+
+void ImpressionistDoc::setStrokeDirectionType(int type)
+{
+	m_pCurrentStrokeDirection = (StrokeDirection)type;
 }
 
 //---------------------------------------------------------
