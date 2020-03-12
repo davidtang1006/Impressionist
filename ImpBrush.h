@@ -52,6 +52,7 @@ public:
 	virtual void BrushEnd(const Point source, const Point target) = 0;
 
 	void CaptureDirectionBegin(const Point target);
+	void CaptureDirectionMove(const Point target);
 	void CaptureDirectionEnd(const Point target);
 
 	// according to the source image and the position, determine the draw color

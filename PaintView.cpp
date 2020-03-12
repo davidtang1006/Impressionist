@@ -110,12 +110,18 @@ void PaintView::draw()
 			}
 			break;
 		case RIGHT_MOUSE_DRAG:
+			if (strcmp(m_pDoc->m_pCurrentBrush->BrushName(), "Lines") == 0 ||
+				strcmp(m_pDoc->m_pCurrentBrush->BrushName(), "Scattered Lines") == 0) {
+				RestoreContent();
+				m_pDoc->m_pCurrentBrush->CaptureDirectionMove(target);
+			}
 			break;
 		case RIGHT_MOUSE_UP:
 			if (strcmp(m_pDoc->m_pCurrentBrush->BrushName(), "Lines") == 0 ||
 				strcmp(m_pDoc->m_pCurrentBrush->BrushName(), "Scattered Lines") == 0) {
 				m_pDoc->m_pCurrentBrush->CaptureDirectionEnd(target);
 			}
+			RestoreContent();
 			break;
 		default:
 			printf("Unknown event!!\n");

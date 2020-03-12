@@ -7,9 +7,9 @@
 #include <limits.h>
 #include <math.h>
 
+#include "ImpBrush.h"
 #include "impressionistDoc.h"
 #include "impressionistUI.h"
-#include "ImpBrush.h"
 
 // Static class member initializations
 int ImpBrush::c_nBrushCount = 0;
@@ -24,6 +24,19 @@ void ImpBrush::CaptureDirectionBegin(const Point target) {
 	ImpressionistUI* dlg = pDoc->m_pUI;
 
 	m_DirectionStartPoint = target;
+}
+
+void ImpBrush::CaptureDirectionMove(const Point target) {
+	ImpressionistDoc* pDoc = GetDocument();
+	ImpressionistUI* dlg = pDoc->m_pUI;
+
+	glBegin(GL_LINES);
+
+	glColor3ub(255, 0, 0);
+	glVertex2i(m_DirectionStartPoint.x, m_DirectionStartPoint.y);
+	glVertex2i(target.x, target.y);
+
+	glEnd();
 }
 
 void ImpBrush::CaptureDirectionEnd(const Point target) {
