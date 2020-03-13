@@ -26,7 +26,7 @@ void ScatteredLineBrush::BrushMove(Point source, const Point target)
 	ImpressionistUI* dlg = pDoc->m_pUI;
 
 	if (pDoc == NULL) {
-		printf("LineBrush::BrushMove document is NULL\n");
+		printf("ScatteredLineBrush::BrushMove document is NULL\n");
 		return;
 	}
 
@@ -51,6 +51,7 @@ void ScatteredLineBrush::BrushMove(Point source, const Point target)
 
 		source.translate(randomMovementX, randomMovementY);
 		SetColor(source, alpha);
+		source.translate(-randomMovementX, -randomMovementY); // Revert the translation
 		glVertex2f(target.x - (float)size / 2.0f, target.y - (float)lineWidth / 2.0f);
 		glVertex2f(target.x + (float)size / 2.0f, target.y - (float)lineWidth / 2.0f);
 		glVertex2f(target.x + (float)size / 2.0f, target.y + (float)lineWidth / 2.0f);
