@@ -12,6 +12,10 @@
 #define min(a, b) (( (a)<(b) ) ? (a) : (b))
 #endif
 
+static bool isMarkerAvailable = false;
+static int markerX;
+static int markerY;
+
 OriginalView::OriginalView(int x, int y, int w, int h, const char* l) : Fl_Gl_Window(x, y, w, h, l)
 {
 	m_nWindowWidth = w;
@@ -66,6 +70,17 @@ void OriginalView::draw()
 		glPixelStorei(GL_UNPACK_ROW_LENGTH, m_pDoc->m_nWidth);
 		glDrawBuffer(GL_BACK);
 		glDrawPixels(drawWidth, drawHeight, GL_RGB, GL_UNSIGNED_BYTE, bitstart);
+
+		if (isMarkerAvailable == true)
+		{
+			glPointSize(5);
+			glBegin(GL_POINTS);
+
+			glColor3ub(255, 0, 0);
+			glVertex2d(markerX, markerY);
+
+			glEnd();
+		}
 	}
 	glFlush();
 }
@@ -78,4 +93,12 @@ void OriginalView::refresh()
 void OriginalView::resizeWindow(int width, int height)
 {
 	resize(x(), y(), width, height);
+}
+
+void OriginalView::showMarker(int x, int y)
+{
+	isMarkerAvailable = true;
+	markerX = x;
+	markerY = y;
+	redraw();
 }

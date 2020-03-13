@@ -196,6 +196,8 @@ int PaintView::handle(int event)
 	case FL_MOVE:
 		coord.x = Fl::event_x();
 		coord.y = Fl::event_y();
+
+		m_pDoc->m_pUI->m_origView->showMarker(coord.x + m_nStartCol, m_nEndRow - coord.y);
 		break;
 	default:
 		return 0;

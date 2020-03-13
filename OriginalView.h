@@ -29,6 +29,8 @@ public:
 
 	void resizeWindow(int width, int height);
 
+	void OriginalView::showMarker(int x, int y);
+
 	ImpressionistDoc* m_pDoc;
 
 private:
