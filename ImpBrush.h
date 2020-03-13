@@ -37,6 +37,11 @@ public:
 	Point() {};
 	Point(int xx, int yy) { x = xx; y = yy; };
 
+	void translate(int x, int y) {
+		this->x += x;
+		this->y += y;
+	}
+
 	int x, y;
 };
 
