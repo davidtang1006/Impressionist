@@ -16,7 +16,7 @@ B dissolve                                              no
 BW fade in/out input on output canvas                   no
 BW mural (blending)                                     no
 BW alpha brush                                          no
-BW automatic paint whole image                          no
+BW automatic paint whole image                          yes (2)
 BW gradient from user-specified image                   no
 BW edge clipping                                        no
 2B user-specified kernel                                no
@@ -29,3 +29,4 @@ BW edge clipping                                        no
 8B Bayesian matting                                     no
 
 (1): Four new brushes were implemented (box, cross, triangle, scattered triangle brush).
+(2): The function can be found under "File". I believe my implementation is somewhat close to the correct one.

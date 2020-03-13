@@ -212,6 +212,13 @@ void ImpressionistUI::cb_clear_canvas(Fl_Menu_* o, void* v)
 	pDoc->clearCanvas();
 }
 
+void ImpressionistUI::cb_paint_automatically(Fl_Menu_* o, void* v)
+{
+	ImpressionistDoc* pDoc = whoami(o)->getDocument();
+
+	pDoc->m_pUI->m_paintView->PaintAutomatically();
+}
+
 //------------------------------------------------------------
 // Causes the Impressionist program to exit
 // Called by the UI when the quit menu item is chosen
@@ -407,7 +414,9 @@ Fl_Menu_Item ImpressionistUI::menuitems[] = {
 		{ "&Brushes...", FL_ALT + 'b', (Fl_Callback*)ImpressionistUI::cb_brushes },
 		{ "&Clear Canvas", FL_ALT + 'c', (Fl_Callback*)ImpressionistUI::cb_clear_canvas, 0, FL_MENU_DIVIDER },
 
-	{ "&Quit", FL_ALT + 'q', (Fl_Callback*)ImpressionistUI::cb_exit },
+		{ "&Paint Automatically", FL_ALT + 'p', (Fl_Callback*)ImpressionistUI::cb_paint_automatically, 0, FL_MENU_DIVIDER },
+
+		{ "&Quit", FL_ALT + 'q', (Fl_Callback*)ImpressionistUI::cb_exit },
 		{ 0 },
 
 	{ "&Help", 0, 0, 0, FL_SUBMENU },

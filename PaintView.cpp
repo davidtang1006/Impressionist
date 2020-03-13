@@ -22,6 +22,8 @@
 #define max(a, b) ( ( (a)>(b) ) ? (a) : (b) )
 #endif
 
+extern float frand();
+
 static int		eventToDo;
 static int		isAnEvent = 0;
 static Point	coord;
@@ -250,4 +252,19 @@ void PaintView::RestoreContent()
 		m_pPaintBitstart);
 
 	// glDrawBuffer(GL_FRONT);
+}
+
+void PaintView::PaintAutomatically()
+{
+	for (int i = 0; i < m_nWindowWidth; i += 4)
+	{
+		for (int j = 0; j < m_nWindowHeight; j += 4)
+		{
+			coord.x = i + frand() - 0.5;
+			coord.y = j + frand() - 0.5;
+			eventToDo = LEFT_MOUSE_DOWN;
+			isAnEvent = 1;
+			draw();
+		}
+	}
 }
