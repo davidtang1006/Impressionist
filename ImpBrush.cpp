@@ -69,6 +69,13 @@ void ImpBrush::CaptureCursorDirectionEnd(const Point target) {
 	m_CursorPreviousLocation = target;
 }
 
+void ImpBrush::CaptureGradientDirection(const Point source) {
+	ImpressionistDoc* pDoc = GetDocument();
+	ImpressionistUI* dlg = pDoc->m_pUI;
+
+	dlg->setLineAngle(pDoc->GetAnglePerpendicularToGradient(source));
+}
+
 //---------------------------------------------------
 // Return m_pDoc, which connects the UI and brushes
 //---------------------------------------------------

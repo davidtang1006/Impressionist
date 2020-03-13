@@ -53,6 +53,8 @@ public:
 	GLubyte* GetOriginalPixel(int x, int y);
 	// Get the color of the original picture at the specified point
 	GLubyte* GetOriginalPixel(const Point p);
+	float calculateBlurredPixel(int x, int y, int rgb); // Helper function
+	int GetAnglePerpendicularToGradient(const Point source);
 
 private:
 	char m_imageName[256];

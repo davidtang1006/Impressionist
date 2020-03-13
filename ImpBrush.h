@@ -58,6 +58,8 @@ public:
 	void CaptureCursorDirectionBegin(const Point target);
 	void CaptureCursorDirectionEnd(const Point target);
 
+	void CaptureGradientDirection(const Point source);
+
 	// according to the source image and the position, determine the draw color
 	void SetColor(const Point source, const float alpha);
 

@@ -6,6 +6,7 @@
 //
 
 #include <FL/fl_ask.H>
+#include <math.h>
 
 #include "ImpBrush.h"
 #include "impressionistDoc.h"
@@ -194,4 +195,60 @@ GLubyte* ImpressionistDoc::GetOriginalPixel(int x, int y)
 GLubyte* ImpressionistDoc::GetOriginalPixel(const Point p)
 {
 	return GetOriginalPixel(p.x, p.y);
+}
+
+float ImpressionistDoc::calculateBlurredPixel(int x, int y, int rgb) {
+	int sum = 0;
+	for (int i = -1; i < 2; i++) {
+		for (int j = -1; j < 2; j++) {
+			sum += (int)GetOriginalPixel(x + i, y + j)[rgb];
+		}
+	}
+	return (float)sum / 9.0f;
+}
+
+float calculateIntensity(float r, float g, float b)
+{
+	return r * 0.299f + g * 0.587f + b * 0.144f;
+}
+
+int ImpressionistDoc::GetAnglePerpendicularToGradient(const Point source)
+{
+	float colorX1[3];
+	float colorX2[3];
+	float colorY1[3];
+	float colorY2[3];
+
+	float intensityX1;
+	float intensityX2;
+	float intensityY1;
+	float intensityY2;
+
+	colorX1[0] = calculateBlurredPixel(source.x, source.y, 0);
+	colorX1[1] = calculateBlurredPixel(source.x, source.y, 1);
+	colorX1[2] = calculateBlurredPixel(source.x, source.y, 2);
+	intensityX1 = calculateIntensity(colorX1[0], colorX1[1], colorX1[2]);
+
+	colorX2[0] = calculateBlurredPixel(source.x + 1, source.y, 0);
+	colorX2[1] = calculateBlurredPixel(source.x + 1, source.y, 1);
+	colorX2[2] = calculateBlurredPixel(source.x + 1, source.y, 2);
+	intensityX2 = calculateIntensity(colorX2[0], colorX2[1], colorX2[2]);
+
+	colorY1[0] = calculateBlurredPixel(source.x, source.y, 0);
+	colorY1[1] = calculateBlurredPixel(source.x, source.y, 1);
+	colorY1[2] = calculateBlurredPixel(source.x, source.y, 2);
+	intensityY1 = calculateIntensity(colorY1[0], colorY1[1], colorY1[2]);
+
+	colorY2[0] = calculateBlurredPixel(source.x, source.y + 1, 0);
+	colorY2[1] = calculateBlurredPixel(source.x, source.y + 1, 1);
+	colorY2[2] = calculateBlurredPixel(source.x, source.y + 1, 2);
+	intensityY2 = calculateIntensity(colorY2[0], colorY2[1], colorY2[2]);
+
+	float x = -intensityX1 + intensityX2;
+	float y = -intensityY1 + intensityY2;
+
+	double angle = (atan2(y, x) < 0) ? atan2(y, x) * 180 / M_PI + 360 : atan2(y, x) * 180 / M_PI;
+	int result = ((int)angle + 90) % 360;
+
+	return result;
 }
