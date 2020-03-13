@@ -19,6 +19,10 @@
 #include "ScatteredLineBrush.h"
 #include "ScatteredPointBrush.h"
 #include "ScatteredCircleBrush.h"
+#include "BoxBrush.h"
+#include "CrossBrush.h"
+#include "TriangleBrush.h"
+#include "ScatteredTriangleBrush.h"
 
 #define DESTROY(p) { if ((p)!=NULL) {delete [] p; p=NULL; } }
 
@@ -49,8 +53,19 @@ ImpressionistDoc::ImpressionistDoc()
 	ImpBrush::c_pBrushes[BRUSH_SCATTERED_CIRCLES]
 		= new ScatteredCircleBrush(this, "Scattered Circles");
 
-	// make one of the brushes current
+	// Additional brushes
+	ImpBrush::c_pBrushes[BRUSH_BOXES]
+		= new BoxBrush(this, "Boxes");
+	ImpBrush::c_pBrushes[BRUSH_CROSSES]
+		= new CrossBrush(this, "Crosses");
+	ImpBrush::c_pBrushes[BRUSH_TRIANGLES]
+		= new TriangleBrush(this, "Triangles");
+	ImpBrush::c_pBrushes[BRUSH_SCATTERED_TRIANGLES]
+		= new ScatteredTriangleBrush(this, "Scattered Triangles");
+
+	// Initialization
 	m_pCurrentBrush = ImpBrush::c_pBrushes[0];
+	m_pCurrentStrokeDirection = StrokeDirection::SLIDER_OR_RIGHT_MOUSE;
 }
 
 //---------------------------------------------------------
